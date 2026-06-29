@@ -29,8 +29,11 @@ func Start(db *gorm.DB, cfg *config.Config) {
 	e.Validator = &CustomValidator{validator: validator.New()}
 	e.Use(middleware.RequestLogger())
 
-	e.GET("/health", func(c *echo.Context) error {
-		return c.JSON(200, map[string]string{"status": "ok"})
+	e.GET("/", func(c *echo.Context) error {
+		return c.JSON(200, map[string]any{
+			"success": true,
+			"message": "SpotSync API is running successfully 🚀",
+		})
 	})
 
 	user.RegisterRoutes(e, db, cfg)
